@@ -1,4 +1,6 @@
 body {
+  text-align: center;
+  padding: 25%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -12,28 +14,8 @@ code {
     monospace;
 }
 
-.container {
-  margin: 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.field{
+  margin-bottom: 75px !important;
 }
 
-.box {
-  box-shadow: -4px 10px 35px -1px rgba(0, 0, 0, 0.75);
-  min-height: 20rem;
-  margin: 30px;
-  padding: 20px;
-  border-radius: 5px;
-}
 
-h1 {
-  margin-left: 20px;
-}
-
-button {
-  float: right;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  background: transparent;
-}
