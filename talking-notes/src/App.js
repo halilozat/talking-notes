@@ -7,20 +7,23 @@ const mic = new SpeechRecognition()
 
 mic.continuous = true
 mic.interimResults = true
-mic.lang = 'en-US'
+mic.lang = 'tr'
 
 
 function App() {
 
   const [isListening, setIsListening] = useState(false)
   const [note, setNote] = useState(null)
-  const [savedNotes, setSavedNotes] = useState([])
+  const [savedNotes, setSavedNotes] = useState(localStorage.savedNotes && JSON.parse(localStorage.savedNotes) || [])
 
   useEffect(() => {
     handleListen()
   }, [isListening])
 
-
+  useEffect(() => {
+    console.log("localstorage : " + savedNotes)
+    localStorage.setItem('savedNotes', JSON.stringify(savedNotes))
+  }, [savedNotes])
 
   const handleListen = () => {
     if (isListening) {
@@ -44,7 +47,6 @@ function App() {
         .map(result => result[0])
         .map(result => result.transcript)
         .join('')
-      console.log(transcript)
       setNote(transcript)
       mic.onerror = event => {
         console.log(event.error)
@@ -57,9 +59,14 @@ function App() {
     setNote('')
   }
 
+  const handleDelete = () => {
+    localStorage.removeItem('savedNotes')
+  }
+
   return (
 
     <>
+
       <h1>Konuşan Notlar</h1>
       <div className="container">
 
@@ -77,8 +84,12 @@ function App() {
 
         <div className="box">
           <h2>Tüm Notlar</h2>
-          {savedNotes.map(n => (
-            <p key={n}>{n}</p>
+          {savedNotes && savedNotes.map((note) => (
+            <div className="notes-box">
+              <p key={note}>{note}</p>
+              <button onClick={handleDelete} className="notes-button">Sil</button>
+              <button className="notes-button"></button>
+            </div>
           ))}
         </div>
 
