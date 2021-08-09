@@ -16,6 +16,16 @@ function App() {
   const [note, setNote] = useState(null)
   const [savedNotes, setSavedNotes] = useState(localStorage.savedNotes && JSON.parse(localStorage.savedNotes) || [])
 
+
+  const parseRegex = /(?<id>(\d*))\s(?=nolu).*(?<command>(sil))$/giu;
+  const voiceMatch = parseRegex.exec(note);
+
+  const allNoteRemoveRegex = /tüm notları sil/giu;
+  const allNotesRemoveMatch = allNoteRemoveRegex.test(note);
+
+
+
+
   useEffect(() => {
     handleListen()
   }, [isListening])
@@ -59,9 +69,15 @@ function App() {
     setNote('')
   }
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
+    e.preventDefault()
     localStorage.removeItem('savedNotes')
   }
+
+  if (allNotesRemoveMatch) {
+    handleDelete()
+  }
+  
 
   return (
 
