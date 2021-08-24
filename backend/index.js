@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import noteRouter from './routers/noteRouter.js'
 
 const app = express()
+app.use(express.json({ limit: '20mb' }))
 dotenv.config()
 
 
