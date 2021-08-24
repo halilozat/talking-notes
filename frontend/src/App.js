@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from "react-router-dom";
 import './App.css'
 
 const SpeechRecognition =
@@ -15,7 +16,7 @@ function App() {
   const [isListening, setIsListening] = useState(false)
   const [note, setNote] = useState(null)
   const [savedNotes, setSavedNotes] = useState(localStorage.savedNotes && JSON.parse(localStorage.savedNotes) || [])
-
+  const history = useHistory()
 
   const parseRegex = /(?<id>(\d*))\s(?=nolu).*(?<command>(sil))$/giu;
   const voiceMatch = parseRegex.exec(note);
@@ -67,17 +68,17 @@ function App() {
   const handleSaveNote = () => {
     setSavedNotes([...savedNotes, note])
     setNote('')
+    console.log(savedNotes.length);
   }
 
   const handleDelete = (e) => {
-    e.preventDefault()
     localStorage.removeItem('savedNotes')
   }
 
   if (allNotesRemoveMatch) {
     handleDelete()
   }
-  
+
 
   return (
 
@@ -101,8 +102,8 @@ function App() {
         <div className="box">
           <h2>Tüm Notlar</h2>
           {savedNotes && savedNotes.map((note) => (
-            <div className="notes-box">
-              <p key={note}>{note}</p>
+            <div key={note} className="notes-box">
+              <p>{note}</p>
               <button onClick={handleDelete} className="notes-button">Sil</button>
               <button className="notes-button"></button>
             </div>
